@@ -1,7 +1,8 @@
 /**
  * This combo should be much better behaved than a regular combo.  It is
- * basically a html select, except it can be dnamically loaded via ajax.  Users
- * cannot ever type free text into it, but its values can come from all over.
+ * basically a html select, except it can be dynamically loaded via ajax.  Users
+ * cannot type free text into it(unless you say "autoComplete: true"), 
+ * but its values can come from all over.
  * Originally written at SixFriedRice.
  *
  *
@@ -11,6 +12,7 @@
  *    valueField:
  *    value: the selected value.  If you
  *    defaultFirst: true to automatically choose the first value, requires autoLoad
+ *    autoComplete: true to allow typing in the field and remote filtering.
  */
 Ext.define('TenForward.form.WellBehavedComboBox', {
    extend: 'Ext.form.ComboBox',
@@ -21,8 +23,10 @@ Ext.define('TenForward.form.WellBehavedComboBox', {
       this.type_ahead_buffer = "";
       this.reset_timeout = null;
 
-      this.editable = false;
-      this.triggerAction = "all";
+      if (!this.autoComplete) {
+        this.editable = false;
+        this.triggerAction = "all";
+      }
       this.queryMode = this.queryMode || 'local'; //remote is only needed for type ahead
       this.enableKeyEvents = true;
 
